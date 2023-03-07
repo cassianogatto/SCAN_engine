@@ -1,0 +1,16 @@
+---
+title: "scan_eng_text1"
+author: "Gatto"
+date: '2023-03-07'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+## Upload the shapefile map containing all species' distributions as unique layers with unique IDs and geometries. All SCAN steps are derived from these maps: Spatial similarities (Cs), Scanning algorithm, and Plotting results.
+
+### Sometimes, individual species' layers may be corrupted, for many reasons. Sometimes a projection transformation (CRS of the whole archive) may be enough: just mark the checkbox and choose another EPSG number (see https://epsg.io). Sometimes SCAN_eng may be used to apply sf::st_make_valid to fix individual species issues.
+                                
+### Maps must have, at least, one ID column named 'sp', and a 'geometry' column. If not, check current names below and choose the ID column before loading the the map again. Information about species and geographical projections are also shown.
