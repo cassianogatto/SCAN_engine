@@ -1,5 +1,9 @@
 # SCAN_engine
-__SCAN app repository__
+
+<div class = "container" style = "display:flex">
+<img width = 40% style = "float:right;" src = "scan_maps_Icterus_Amazilia.png">
+<p style = "float:left"> __SCAN app repository__ </p>
+</div>
 
 If you have R installed in your computer, to run SCAN_engine just type:
 
