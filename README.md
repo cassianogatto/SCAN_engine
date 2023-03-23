@@ -2,9 +2,10 @@
 <table style  = 'border: 0px; align:center;'>
   <tr>
     <td width = 40%>
-      <strong>SCAN app repository</strong>
+      <strong>SCAN app repository</strong><br>
       <p>If you have R installed in your computer, to run SCAN_engine just type:</p>
       <code>library(shiny)</code>
+      <br>
       <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
     </td>
     <td width = 55% style = ''>
@@ -12,8 +13,6 @@
     </td>
   </tr>
 </table>
-
-
 
 The **paper** is [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245818) !
 
