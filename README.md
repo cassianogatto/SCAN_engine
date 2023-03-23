@@ -1,7 +1,7 @@
 
 <div class = "container" style = "display:flex">
 <h1 style = "float:letf;"> SCAN_engine </h1>
-<img width = 40% style = "float:right;" src = "scan_maps_Icterus_Amazilia.png">
+<img width = 20% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
 </div>
 
 __SCAN app repository__
