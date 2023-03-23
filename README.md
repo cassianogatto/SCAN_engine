@@ -1,14 +1,14 @@
 <h1 style = "float:letf;"> SCAN_engine </h1>
 <table style  = 'border: 0px; align:center;'>
   <tr>
-    <td width = 40%>
+    <td width = 50%>
       <strong>SCAN app repository</strong><br>
       <p>If you have R installed in your computer, to run SCAN_engine just type:</p>
       <code>library(shiny)</code>
       <br>
       <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
     </td>
-    <td width = 55% style = ''>
+    <td width = 45% style = ''>
       <img width = 60% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
     </td>
   </tr>
