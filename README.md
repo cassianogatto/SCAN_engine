@@ -4,6 +4,7 @@ __SCAN app repository__
 If you have R installed in your computer, to run SCAN_engine just type:
 
 >library(shiny)
+
 >runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")
 
 The **paper** is [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245818) !
