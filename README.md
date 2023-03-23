@@ -1,12 +1,11 @@
 
 <table style  = 'border: 0px'>
   <tr>
-    <td width = 20%>
+    <td width = 40%>
       <h1 style = "float:letf;"> SCAN_engine </h1>
     </td>
-    <td width = 30%> </td>
-    <td width = 35%>
-      <img width = 100% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
+    <td width = 55%>
+      <img width = 80% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
     </td>
   </tr>
 </table>
