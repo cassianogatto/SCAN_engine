@@ -1,10 +1,18 @@
 
-<div class = "container" style = "display:flex">
-<h1 style = "float:letf;"> SCAN_engine </h1>
-<img width = 20% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
-</div>
+<table>
+  <tr>
+    <td width = 20%>
+      <h1 style = "float:letf;"> SCAN_engine </h1>
+    </td>
+    <td width = 40%> </td>
+    <td width = 35%>
+      <img width = 20% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
+    </td>
+  </tr>
+</table>
 
 __SCAN app repository__
+
 If you have R installed in your computer, to run SCAN_engine just type:
 
 >library(shiny)
