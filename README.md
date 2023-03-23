@@ -16,10 +16,11 @@
 
 The **paper** is [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245818) !
 
-### What is SCAN about?
-The paper presents a new concept in biogeography. SCAN network analysis allows a deeper understanding of species spatial relationships, and brings spatial congruence back as a central and explicit parameter in biogeographical analyses.
+SCAN - *Spatial Congruence Analysis* - is a network analysis and a new concept in biogeography: it allows a deeper understanding of species spatial relationships, and brings pure spatial congruence back as a central and explicit parameter in biogeographical analyses.
 
+### What is SCAN about?
 In Biogeography, the  field that studies the spatial distribution of species and the evolution of their environments, there is a pervasive question: - Why unrelated species often have similar geographic distributions?. Unfortunately, most methods approaching this do not use the spatial congruence as an explicit (and controlable) parameter. As SCAN is totally based in species-to-species spatial relationships in an enviroment of network analysis it allows the recovering of the most obvious spatial patterns of shared distributions, but also a plethora of other spatial relationships, including gradients of distribution, that cannot be approapriatelly described by conventional methods.
+
 ### Why is it important?
 
 The algorithm applies objective criteria regarding the spatial properties of entities, such as species, environments and geographic regions, which can be analysed in depth. Recognized patterns may vary from highly congruent, with species showing almost the same distribution, to large and continuous gradients combining species replacing each other along a transition zone. This flexibility allows  the recognition of dynamics and evolution in spatial patterns, and also allows the comparison between species and regions based on natural criteria.
