@@ -8,7 +8,7 @@
     <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
   </column>
   <column width = 45% style = " align: right ; float:right;">
-    <img width = 60%  src = "scan_maps_Icterus_Amazilia.png">
+    <img width = 20%  src = "scan_maps_Icterus_Amazilia.png">
   </column>
 </tr>
 
