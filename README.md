@@ -1,16 +1,18 @@
 <h1 style = "float:letf;"> SCAN_engine </h1>
- <div class = "container" style = "display: flex">
-   <div width = 50% style = "float:left; align:center; ">
+ <table style = "border: 0px">
+  <tr  style = "display: flex">
+   <td width = 50% style = "float:left; align:center; ">
     <strong>SCAN app repository</strong><br>
     <p>If you have R installed in your computer, to run SCAN_engine just type:</p>
     <code>library(shiny)</code>
     <br>
     <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
-  </div>
-  <div width = 45% style = "float:right;">
+  </td>
+  <td width = 45% style = "float:right;">
     <img width = 30%  src = "scan_maps_Icterus_Amazilia.png">
-  </div>
-</div>
+  </td>
+ </tr>
+ </table>
 
 The **paper** is [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245818) !
 
