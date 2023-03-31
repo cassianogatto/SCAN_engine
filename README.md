@@ -8,8 +8,8 @@
     <br>
     <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
   </td>
-  <td width = 45% style = "float:right;">
-    <img width = 30%  src = "scan_maps_Icterus_Amazilia.png">
+  <td width = 45% style = "float:right; align:right">
+    <img width = 50%  src = "scan_maps_Icterus_Amazilia.png">
   </td>
  </tr>
  </table>
