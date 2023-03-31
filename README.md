@@ -1,5 +1,5 @@
 <h1 style = "float:letf;"> SCAN_engine </h1>
-<table style  = 'border: 0px; align:center;'>
+<table style  = 'border: 0px; align:right;'>
   <tr>
     <td width = 50%>
       <strong>SCAN app repository</strong><br>
@@ -8,8 +8,8 @@
       <br>
       <code>runGitHub( "cassianogatto/SCAN_engine", "cassianogatto")</code>
     </td>
-    <td width = 45% style = ''>
-      <img width = 60% style = " align: right ; float:right;" src = "scan_maps_Icterus_Amazilia.png">
+    <td width = 45% style = " align: right ; float:right;">
+      <img width = 60%  src = "scan_maps_Icterus_Amazilia.png">
     </td>
   </tr>
 </table>
