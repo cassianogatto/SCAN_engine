@@ -1,6 +1,6 @@
 <h1 style = "float:letf;"> SCAN_engine </h1>
  <div class = "container" style = "display: flex">
-   <column width = 50% style = "float:left;">
+   <column width = 50% style = "float:left; align:center; ">
     <strong>SCAN app repository</strong><br>
     <p>If you have R installed in your computer, to run SCAN_engine just type:</p>
     <code>library(shiny)</code>
