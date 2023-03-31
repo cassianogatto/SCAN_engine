@@ -1,6 +1,10 @@
 'SCAN_engine_V0.21_24fev2023'#'SCAN_engine_V0.2_02fev2023'
 
 # TO DO
+
+#  - + idiomas
+# logo SCAN (personalização identidade)
+# feedback usuario
 # BIG CHALLENGES
 # invent a system to assign chorotypes (communities) names and recognize the synonyms across threshold rounds in SCAN
 # fix palette mismatch between leaflet and ggplot2
@@ -195,9 +199,11 @@ shinyUI(
                                                                            
                                                                            value = '(area_overlap / area_sp1) * (area_overlap / area_sp2)') ),
                                                 
-                                                column( width = 4, actionButton("calculate_Cs","Apply Cs index to map", class = "btn-warning") ),
+                                                column( width = 4, 
+                                                        actionButton("calculate_Cs","Apply Cs index to map", class = "btn-warning") ),
                                                 
-                                                column( width = 8, numericInput( inputId = "filter_Cs", label = "Minimum Cs value", value = 0.1))
+                                                column( width = 8, 
+                                                        numericInput( inputId = "filter_Cs", label = "Minimum Cs value", value = 0.1)  ),
                                             ),
                                        ), 
                                        
@@ -213,15 +219,12 @@ shinyUI(
                                                column(width = 6, tags$h4("Shrinking Distribution Buffer!")),
                                                
                                                column(width = 2, icon ('skull-crossbones'))
-                                           ),
-                                           
+                                           ), # caution message
                                            tags$h5("For large datasets, the Cs calculus may take a long time. 
                                 The use of inner buffers in selected area-size-classes (quartiles) may save precious time, 
                                 avoiding marginal spatial overlaps."),
-                                           
                                            tags$h4("SCAN algorithm uses original distribution areas but some overlaps may be discarded in the Cs table because of buffers. 
                                     Be careful to not loose information!"),
-                                           
                                            tags$h5("Obs. Buffers are better suited for metric-based CRS projections. The map tab allows crs change (e.g. from WGS84:4326 'degree' unit 
                                 to WGS84:3857 Pseudo-Mercator 'metre'."),
                                            
@@ -234,9 +237,9 @@ shinyUI(
                                                              checkboxGroupInput(inputId = "quantiles_to_buffer", label = "Input quartile areas to buffer",
                                                                                 
                                                                                 choices = c(1,2,3,4), selected = c(), inline = TRUE),
-                                           ),
+                                           ), # use buffer to polygons
                                            
-                                           conditionalPanel( condition = "input.calculate_Cs > 0",   tags$h6("Do NOT change TAB while running ! This may take a long time depending on the number of species ... ")   ),         
+                                           conditionalPanel( condition = "input.calculate_Cs > 0",   tags$h6("Do NOT change TAB while running ! This may take a long time depending on the number of species ... ")   ), # calculate Cs        
                                        ), 
                                        
                                        box( width = 6,
@@ -251,7 +254,7 @@ shinyUI(
                                             ), 
                                             
                                             # tags$h4("Choose a lower limit to spatial congruence Cs ?");# checkboxInput("apply_filter_Cs", "Apply filter to Cs?", value = FALSE),# conditionalPanel( condition = "input.apply_filter_Cs == true", )
-                                       ),
+                                       ), # # upload Cs
                                        
                                        box(width = 6,
                                            
@@ -269,11 +272,11 @@ shinyUI(
                                                
                                                column( width = 6,  box(  tableOutput("Cs_tail") ) )
                                            )
-                                       ), # upload Cs
+                                       ), # download Cs tables
                                        
                                        box( width = 6,
                                             
-                                            HTML("<code> Check graph's nodes and edges here!</code>"),    
+                                            tags$h5("<code> Check graph's nodes and edges here!</code>"),    
                                             
                                             fluidRow(    
                                                 
@@ -283,7 +286,6 @@ shinyUI(
                                             )
                                        ) # check Cs
                                    )
-                                   
                            ),
                            
                            # scan ----
@@ -301,22 +303,26 @@ shinyUI(
                                                 
                                                 fluidRow(
                                                     
-                                                    column( width = 3, numericInput(inputId = "resolution", label = "Resolution (interval between Ct)", value = 0.1) ),
-                                                    
-                                                    column( width = 3, numericInput(inputId = "threshold_max", label = "Max value of threshold Ct", value = 0.9, min = 0.2, max = 1) ),
-                                                    
-                                                    column( width = 3, numericInput(inputId = "threshold_min", label = "Min value of threshold Ct", value = 0.2, min = 0.05, max = 0.9) ),
-                                                    
-                                                    column( width = 3, conditionalPanel(condition = "input.filter_diameter == true",
-                                                                                        
-                                                                                        numericInput(inputId = "max_diameter", label = "Choose the maximum (network) diameter", value = 15)
-                                                    )
-                                                    )
+                                                        column( width = 3, 
+                                                                numericInput(inputId = "resolution", label = "Resolution (interval between Ct)", value = 0.1) 
+                                                        ),
+                                                        column( width = 3, 
+                                                                numericInput(inputId = "threshold_max", label = "Max value of threshold Ct", value = 0.9, min = 0.2, max = 1) 
+                                                        ),
+                                                        column( width = 3, 
+                                                                numericInput(inputId = "threshold_min", label = "Min value of threshold Ct", value = 0.2, min = 0.05, max = 0.9) 
+                                                        ),
+                                                        column( width = 3, 
+                                                                conditionalPanel(condition = "input.filter_diameter == true",
+                                                                                            
+                                                                        numericInput(inputId = "max_diameter", label = "Choose the maximum (network) diameter", value = 15)
+                                                        )       )
                                                 ), 
                                                 #sliderInput( inputId = "threshold_min_max", label = "Select the threshold range to SCAN", value = c(0.8, 1), min = 0.2, max = 1, step = 0.01 ),
                                                 fluidRow(
                                                     
-                                                    column( width =2, actionButton("run_scan", "SCAN!", class = "btn-warning") ),
+                                                    column( width =2, 
+                                                            actionButton("run_scan", "SCAN!", class = "btn-warning") ),
                                                     
                                                     column( width = 3, 
                                                             checkboxInput(inputId = "overlap", label = "Overlap criterion: Require overlap between all species?", value = TRUE)),
@@ -336,7 +342,7 @@ shinyUI(
                                                                               tags$h6("Do NOT change TAB while running ! This also may last a long time... check R console")  )
                                                     )
                                                 )
-                                           ),
+                                           ), # set parameters
                                            
                                            box( width = 12,
                                                 
@@ -350,7 +356,7 @@ shinyUI(
                                                     
                                                     column( width = 4, downloadButton("downloadData", "Download") )
                                                 )
-                                           )
+                                           ), # scan results and download
                                        ),
                                        
                                        fluidRow(
@@ -376,7 +382,7 @@ shinyUI(
                                    
                                    fluidPage(
                                        
-                                       tags$h2("SCAN Viewer"),# tags$h3("Chorotype maps"),
+                                       tags$h2("SCAN Viewer"),
                                        
                                        box(width = 12,
                                            
@@ -393,8 +399,6 @@ shinyUI(
                                                                            fileInput(inputId = "graph_edges", label = "graph EDGES in csv",  accept = c("text/csv","text/comma-separated-values,text/plain",".csv"))
                                                                    )
                                                ),
-                                               
-                                               # column(width = 2, numericInput(inputId = "threshold", label = "Threshold (0-1)", value = 0.9, max = 1, min = 0.1)),
                                                
                                                column(width = 2,
                                                       
