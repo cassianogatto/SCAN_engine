@@ -30,22 +30,21 @@
 # HTML('<p> this is p </p>'),
 # HTML('<code> this is code </code>'),
 
-
-library(shiny)
-library(shinydashboard)
-library(htmltools)
-library(dplyr)
-library(igraph)
-library(tidygraph)
-library(tidyr)
-library(ggraph)
-library(readr)
-library(sf)
-library(ggplot2)
-library(leaflet)
-library(rgdal)
-library(units)
-library(leaflet.esri)
+if(!require(shiny)) install.packages("shiny", repos = "http://cran.us.r-project.org")
+if(!require(shinydashboard)) install.packages("shinydashboard", repos = "http://cran.us.r-project.org")
+if(!require(htmltools)) install.packages("htmltools", repos = "http://cran.us.r-project.org")
+if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
+if(!require(igraph)) install.packages("igraph", repos = "http://cran.us.r-project.org")
+if(!require(tidygraph)) install.packages("tidygraph", repos = "http://cran.us.r-project.org")
+if(!require(tidyr)) install.packages("tidyr", repos = "http://cran.us.r-project.org")
+if(!require(ggraph)) install.packages("ggraph", repos = "http://cran.us.r-project.org")
+if(!require(readr)) install.packages("readr", repos = "http://cran.us.r-project.org")
+if(!require(sf)) install.packages("sf", repos = "http://cran.us.r-project.org")
+if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
+if(!require(leaflet)) install.packages("leaflet", repos = "http://cran.us.r-project.org")
+if(!require(rgdal)) install.packages("rgdal", repos = "http://cran.us.r-project.org")
+if(!require(units)) install.packages("units", repos = "http://cran.us.r-project.org")
+if(!require(leaflet.esri)) install.packages("leaflet.esri", repos = "http://cran.us.r-project.org")
 
 # UI
 
@@ -75,10 +74,20 @@ shinyUI(
                        tags$head( 
                            tags$style(
                                HTML( #.shiny-input-container { color: #474747;   }
-                                   ".content {  background-color:white; padding-top: 40px; padding-left: 40px;}
-                        .body { background-color: white;   color: black;   }
-                        .sidebar {  position:fixed;  overflow:visible; }            
-                        .main-header { position: fixed; width = 80%; }"
+                                ".content {  
+                                    background-color:white; 
+                                    padding-top: 40px; 
+                                    padding-left: 40px;}
+                                
+                                .body { 
+                                    background-color: white;   
+                                    color: black;   }
+                                .sidebar {  
+                                    position:fixed;  
+                                    overflow:visible; }            
+                                .main-header { 
+                                    position: fixed; 
+                                    width = 80%; }"
                                )  )  ),
                        
                        tabItems(
