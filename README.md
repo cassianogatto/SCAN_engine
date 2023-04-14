@@ -1,6 +1,13 @@
-<h1 style = "float:letf;"> SCAN_engine </h1>
 
-<img  src = "Psophia.jpg">
+<tr>
+<td>
+<h1 style = "float:letf;"> SCAN_engine </h1>
+</td>
+<td>
+ <img height = 60% src = "Psophia.jpg">
+</td>
+</tr>
+
 
  <table style = "border: 0px">
   <tr  style = "display: flex">
