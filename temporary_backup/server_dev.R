@@ -1,3 +1,4 @@
+
 shinyServer(function(input,output,session){
     # source
     { # source
@@ -629,14 +630,7 @@ shinyServer(function(input,output,session){
         
     })# |> head() 
     
-    # viewer
-    pal <- reactive({ 
-        
-        # colorFactor(  , domain = input$selected_components)  
-        colorBin(palette = input$palette, domain = unique(g_map()$comps), bins = 7)
-        
-    })#original_components()) 
-    
+    # output viewer ----
     output$original_components <- renderUI({
         
         checkboxGroupInput(inputId = "selected_components", 
@@ -653,99 +647,169 @@ shinyServer(function(input,output,session){
             group_by(comps) |> summarise(n_spp = n(), species = paste0(name, collapse = ', '))
     })
     
-    output$map_plot <- renderLeaflet({  # pal <- colorFactor(input$palette, domain = original_components() )#colorBin(input$palette, domain = original_components() ) #input$selected_components)# colorNumeric # pal <- colorBin(input$palette, domain = original_components(), bins = 7)# labels <- sprintf("%s %s", g_map$comps, g_map$sp) %>% lapply(htmltools::HTML)   # %s use the first 'string'
-        
-        g_map() |> leaflet() |> 
-            
-            #addTiles() |>
-            
-            addProviderTiles("Esri.WorldTopoMap") %>%
-            # addEsriTiledMapLayer( url = "https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer") |> 
-            
-            addPolygons(  weight = 1,  fillColor = ~ pal()(comps), color = "black", dashArray = "1", fillOpacity = input$map_alpha  ) # highlightOptions = highlightOptions(color = "white", weight = 2, bringToFront = TRUE),# %>% leaflet::addLegend(  pal = pal, values = ~comps,  opacity = 0.7, title = "Chorotypes" )
-    })
-    
-    output$ggplot_map <- renderPlot({
-        
-        # sa <- #st_as_sfc(scan("C:/Users/cassiano/hubic/Amazon_birds/R_Amazon_birds/SCAN_Viewer/SCAN_engine/SCAN_engine/www/sa.txt"))
-        # st_read("www/World_Continents.shp")
-        # map <- st_union(g_map(), sa)
-        
-        gmap_points <- cbind(g_map() |> st_drop_geometry(), st_coordinates(st_centroid(g_map()$geometry)))
-        
-        ggplot(data = g_map() %>% arrange(comps)|> mutate(comps = as.factor(comps)) )  +
-            
-            geom_sf( aes(fill = comps), # an IFELSE TURNS FILL TO CONTINUOUS... use distiller, otherwise scale_fill_brewer to discrete palette
-                     alpha = input$map_alpha, 
-                     color = 'black', 
-                     show.legend = F) +
-            # geom_sf(data = sa, fill = NA, color = 'black') +
-            
-            # scale_fill_distiller( direction = 1, palette =   input$palette, na.value = "transparent", aesthetics = "fill") + #start = 0.2, end = 0.8, #Diverging  BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral
-                    # scale_fill_continuous(values = palette(g_map$comps)) +
-            
-            scale_fill_manual(values = pal()(g_map()$comps)) +
-            
-            ggtitle( paste0(" SCAN - Chorotypes at Ct = ", threshold() ) ) + 
-            # these functions are from ggspatial (not loaded)
-            # annotation_scale(location = "bl", width_hint = 0.5) +
-            # annotation_north_arrow(location = "bl", which_north = "true",  pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"), style = north_arrow_fancy_orienteering) +
-            
-            geom_text(data= gmap_points, aes(x = X, y = Y, label = sp),
-                      color = "black", size = 4, fontface = "italic", check_overlap = TRUE)  +
-            
-            theme_bw()#theme_classic() #theme_minimal() 
-    })
-    
-    output$graph_plot <- renderPlot({
-        
-        lay <- create_layout(g_sub(), layout = input$layout)      # lou <- cluster_louvain(g_sub) hmmm there are other options to graph building...
-        
-        ggraph(lay) +
-            
-            geom_edge_link( aes( alpha = (Cs+0.75)) , width = 1.25 , show.legend = FALSE) +
-            
-            geom_node_point( aes( fill = comps),  size = (degree( g_sub(), mode="all") + 15) / 3, shape = 21, show.legend = FALSE) +  # how to synchronize with palette used in MAP? ~pal ??
-            
-            # scale_fill_distiller( direction = 1, palette = input$palette, na.value = "transparent", aesthetics = "fill") +
-            # scale_fill_manual(values = pal(as.factor(comps))) +
-            scale_fill_manual(values = pal()(g_map()$comps)) +
-            # scale_fill_brewer (values = palette()(comps) ) +
-            
-            geom_node_text( aes( label = name), size = 3, col = "black", repel= TRUE) +
-            
-            labs( subtitle = paste0("Ct = ", threshold() )) +
-            
-            theme_graph()
-        
-        # tring to implementate hulls showing groups... not succesfull
-        # basic_graph2 <-  basic_graph1 + geom_mark_hull(aes(x, y, group = comps), label = comps, label.fontsize = 15, fill = "transparent", lty = "dotted", concavity = 1, expand = unit(3, "mm"), alpha = 0.05) + theme(legend.position = "none")
-    })
-    
-    output$graph_plot2 <- renderPlot({
-        
-        lay <- create_layout(g_sub(), layout = input$layout)
-        
-        ggraph(lay) +
-            
-            geom_edge_link(aes(alpha = (Cs+0.75)) , width = 1.25 , show.legend = FALSE) +
-            
-            geom_node_point(aes(fill = comps), # how to synchronize with palette used in MAP? ~pal ??
-                            
-                            size =  (degree(g_sub(), mode="all") + 20) / 4, shape = 21, show.legend = FALSE) +
-            
-            scale_fill_distiller( direction = 1, palette = input$palette, na.value = "transparent", aesthetics = "fill") +
-            
-            geom_node_text(aes(label = name), size = 4, col = "black", repel=TRUE) +
-            
-            labs( subtitle = paste0("Ct = ", threshold() )) +
-            
-            theme_graph()
-        
-    })
+    # pal <- reactive({ colorFactor(  palette = input$palette, domain = input$selected_components)  })#original_components()) 
+    # 
+    # output$map_plot <- renderLeaflet({  # pal <- colorFactor(input$palette, domain = original_components() )#colorBin(input$palette, domain = original_components() ) #input$selected_components)# colorNumeric # pal <- colorBin(input$palette, domain = original_components(), bins = 7)# labels <- sprintf("%s %s", g_map$comps, g_map$sp) %>% lapply(htmltools::HTML)   # %s use the first 'string'
+    # 
+    #     g_map() |> leaflet() |>
+    # 
+    #         #addTiles() |>
+    # 
+    #         addProviderTiles("Esri.WorldTopoMap") %>%
+    #         # addEsriTiledMapLayer( url = "https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer") |>
+    # 
+    #         addPolygons(  weight = 1,  fillColor = ~ pal()(comps), color = "black", dashArray = "1", fillOpacity = input$map_alpha  ) # highlightOptions = highlightOptions(color = "white", weight = 2, bringToFront = TRUE),# %>% leaflet::addLegend(  pal = pal, values = ~comps,  opacity = 0.7, title = "Chorotypes" )
+    # })
+    # 
+    # output$ggplot_map <- renderPlot({
+    #     
+    #     # sa <- #st_as_sfc(scan("C:/Users/cassiano/hubic/Amazon_birds/R_Amazon_birds/SCAN_Viewer/SCAN_engine/SCAN_engine/www/sa.txt"))
+    #     # st_read("www/World_Continents.shp")
+    #     # map <- st_union(g_map(), sa)
+    #     
+    #     gmap_points <- cbind(g_map() |> st_drop_geometry(), st_coordinates(st_centroid(g_map()$geometry)))
+    #     
+    #     ggplot(data = g_map() %>% arrange(comps)) +
+    #         
+    #         geom_sf( aes(fill = comps), # an IFELSE TURNS FILL TO CONTINUOUS... use distiller, otherwise scale_fill_brewer to discrete palette
+    #                  alpha = input$map_alpha, 
+    #                  color = 'black', 
+    #                  show.legend = F) +
+    #         # geom_sf(data = sa, fill = NA, color = 'black') +
+    #         
+    #         scale_fill_distiller( direction = 1, 
+    #                               palette =   input$palette, 
+    #                               na.value = "transparent", 
+    #                               aesthetics = "fill") + #start = 0.2, end = 0.8, #Diverging  BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral
+    #         # scale_fill_continuous(values = palette(g_map$comps)) +
+    #         
+    #         ggtitle( paste0(" SCAN - Chorotypes at Ct = ", threshold() ) ) + 
+    #         # these functions are from ggspatial (not loaded)
+    #         # annotation_scale(location = "bl", width_hint = 0.5) +
+    #         # annotation_north_arrow(location = "bl", which_north = "true",  pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"), style = north_arrow_fancy_orienteering) +
+    #         
+    #         geom_text(data= gmap_points, aes(x = X, y = Y, label = sp),
+    #                   color = "black", size = 4, fontface = "italic", check_overlap = TRUE)  +
+    #         
+    #         theme_bw()#theme_classic() #theme_minimal() 
+    # })
+    # 
+    # output$graph_plot <- renderPlot({
+    #     
+    #     lay <- create_layout(g_sub(), layout = input$layout)      # lou <- cluster_louvain(g_sub) hmmm there are other options to graph building...
+    #     
+    #     ggraph(lay) +
+    #         
+    #         geom_edge_link( aes( alpha = (Cs+0.75)) , width = 1.25 , show.legend = FALSE) +
+    #         
+    #         geom_node_point( aes( fill = comps),  size = (degree( g_sub(), mode="all") + 15) / 4, shape = 21, show.legend = FALSE) +  # how to synchronize with palette used in MAP? ~pal ??
+    #         
+    #         # scale_fill_distiller( direction = 1, palette = input$palette, na.value = "transparent", aesthetics = "fill") +
+    #         # scale_fill_manual(values = pal(as.factor(comps))) +
+    #         # scale_fill_brewer (values = palette()(comps) ) +
+    #         
+    #         geom_node_text( aes( label = name), size = 3, col = "black", repel= TRUE) +
+    #         
+    #         labs( subtitle = paste0("Ct = ", threshold() )) +
+    #         
+    #         theme_graph()
+    #     
+    #     # tring to implementate hulls showing groups... not succesfull
+    #     # basic_graph2 <-  basic_graph1 + geom_mark_hull(aes(x, y, group = comps), label = comps, label.fontsize = 15, fill = "transparent", lty = "dotted", concavity = 1, expand = unit(3, "mm"), alpha = 0.05) + theme(legend.position = "none")
+    # })
+    # 
+    # output$graph_plot2 <- renderPlot({
+    #     
+    #     lay <- create_layout(g_sub(), layout = input$layout)
+    #     
+    #     ggraph(lay) +
+    #         
+    #         geom_edge_link(aes(alpha = (Cs+0.75)) , width = 1.25 , show.legend = FALSE) +
+    #         
+    #         geom_node_point(aes(fill = comps), # how to synchronize with palette used in MAP? ~pal ??
+    #                         
+    #                         size =  (degree(g_sub(), mode="all") + 20) / 4, shape = 21, show.legend = FALSE) +
+    #         
+    #         scale_fill_distiller( direction = 1, palette = input$palette, na.value = "transparent", aesthetics = "fill") +
+    #         
+    #         geom_node_text(aes(label = name), size = 4, col = "black", repel=TRUE) +
+    #         
+    #         labs( subtitle = paste0("Ct = ", threshold() )) +
+    #         
+    #         theme_graph()
+    #     
+    # })
     
     output$photo <- renderImage({ list( src = file.path("www", "journal.pone.0245818.g004.PNG") ,width = 500, height = 650 #contentType = "image/jpeg",
     )}, deleteFile = FALSE)
     
     
+    
+    
+    # chat gpt
+    
+    # Define color palette
+    pal <- reactive({ colorBin("Spectral", domain = unique(g_map()$comps), bins = 7)  })
+    
+    # Define renderLeaflet function
+    output$map_plot <- renderLeaflet({
+        leaflet() %>%
+            addProviderTiles("Esri.WorldTopoMap") %>%
+            addPolygons(
+                data = g_map(),
+                weight = 1,
+                fillColor = ~ pal()(comps),
+                color = "black",
+                dashArray = "1",
+                fillOpacity = input$map_alpha
+            )
+    })
+    
+    # Define renderPlot function
+    output$ggplot_map <- renderPlot({
+        ggplot(data = g_map() %>% arrange(comps)) +
+            geom_sf(
+                aes(fill = comps),
+                alpha = input$map_alpha,
+                color = "black",
+                show.legend = FALSE
+            ) +
+            scale_fill_manual(values = pal()(g_map()$comps)) +
+            ggtitle(paste0(" SCAN - Chorotypes at Ct = ", threshold())) +
+            geom_text(
+                data = gmap_points,
+                aes(x = X, y = Y, label = sp),
+                color = "black",
+                size = 4,
+                fontface = "italic",
+                check_overlap = TRUE
+            ) +
+            theme_bw()
+    })
+    
+    output$graph_plot <- renderPlot({
+        ggraph(lay) +
+            geom_edge_link(
+                aes(alpha = (Cs + 0.75)),
+                width = 1.25,
+                show.legend = FALSE
+            ) +
+            geom_node_point(
+                aes(fill = comps),
+                size = (degree(g_sub(), mode = "all") + 15) / 4,
+                shape = 21,
+                show.legend = FALSE
+            ) +
+            scale_fill_manual(values = pal()(g_map()$comps)) +
+            geom_node_text(aes(label = name), size = 3, col = "black", repel = TRUE) +
+            labs(subtitle = paste0("Ct = ", threshold())) +
+            theme_graph()
+    })
+    
+    
+    
+    
+    
 })
+
+
