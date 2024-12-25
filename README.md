@@ -16,7 +16,7 @@ The algorithm applies objective criteria regarding the spatial properties of ent
    <td width = 50% style = "float:left; align:center; ">
     <strong>SCAN app repository</strong>
     <br>
-    <p>In this GIT version (0.21) SCAN needs a special environment until I update the code to run in newer versions of R.</p>
+    <p>In this GIT version (0.21) SCAN needs a special environment until the code is updated to newer versions of R (not that easy...)</p>
     <p> Until there, you have to install <a href = "https://cran.r-project.org/bin/windows/base/old/4.2.2/"> R version 4.2.2</a> in your computer</p>
     <p> Install <a href = "https://posit.co/downloads/"> RStudio</a> and set <strong>R4.2.2</strong> as the default version (tools/global options/ R general/ R version) -> C:\Program Files\R\R-4.2.2)</p>
     <p> If needed install 'renv' package in R
