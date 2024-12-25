@@ -16,8 +16,8 @@ The algorithm applies objective criteria regarding the spatial properties of ent
    <td width = 50% style = "float:left; align:center; ">
     <strong>SCAN app repository</strong><br>
     <p>In this GIT version (0.21) SCAN needs a special environment until I update the code to run in newer versions of R.</p>p>
-    <p> Until there, you have to install</p> [R version 4.2.2](https://cran.r-project.org/bin/windows/base/old/4.2.2/) <p> installed in your computer.</p>
-    <p> Install</p> [RStudio](https://posit.co/downloads/)<p> and set R4.2.2 as the default version (tools/global options/ R general/ R version) -> C:\Program Files\R\R-4.2.2)</p>
+    <p> Until there, you have to install</p> R version 4.2.2 (https://cran.r-project.org/bin/windows/base/old/4.2.2/) <p> installed in your computer.</p>
+    <p> Install</p> RStudio (https://posit.co/downloads/<p> and set <strong>R4.2.2</strong>strong> as the default version (tools/global options/ R general/ R version) -> C:\Program Files\R\R-4.2.2)</p>
     <p> To run SCAN_engine just type:</p>
     <code>library(shiny)</code>
     <br>
