@@ -61,11 +61,12 @@ shinyUI(
                    dashboardSidebar( width = '230px',
                                      
                                      sidebarMenu(
+                                          menuItem("about SCAN", tabName = "about_SCAN"),
                                          menuItem("Species Distribution Maps ", tabName = "maps"),
                                          menuItem("Spatial Congruence", tabName = "Cs_tab"),
                                          menuItem("SCAN Analysis", tabName = "scan"),
-                                         menuItem("SCAN Viewer", tabName = "SCAN_viewer"),
-                                         menuItem("about SCAN", tabName = "about_SCAN")
+                                         menuItem("SCAN Viewer", tabName = "SCAN_viewer")
+                                        
                                      ) # menu items
                    ),
                    
@@ -91,6 +92,59 @@ shinyUI(
                                )  )  ),
                        
                        tabItems(
+                           
+                           # about ----
+                           tabItem("about_SCAN",
+                                   
+                                   fluidPage(
+                                       
+                                       tags$h3("SCAN"),
+                                       
+                                       tags$h4("https://github.com/cassianogatto/SCAN_engine_app"),
+                                       
+                                       fluidRow(
+                                           
+                                           infoBox(width = 12,
+                                                   title = "Chorotypes", 
+                                                   value = " Chorotypes are unique combinations of species with spatial congruences 'Cs' higher between themselves than to any species of other such groups.
+                                In SCAN species groupings are relative to (and determined by) thresholds of congruence Ct.
+                                Each chorotype is a 'community' (in network terminology), as represented in the graph: links are Cs values.
+                                The map depicts the actual spatial distribution of each component species of a chorotype.
+                                Chorotype may 'evolve' as thresholds get lower, grouping more species, until a criterion of spatial overlap is violated.
+                                Some groups exist already at high Ct values; others only at low Ct's - it depends on the biogeograpical, ecological and historical attributes of species and environments.
+                                see Gatto & Cohn-Haft 2021 - PlosOne https://doi.org/10.1371/journal.pone.0245818" ),
+                                           imageOutput("photo1"),
+                                           box(
+                                               tags$h4("Abstract (from Gatto & Cohn-Haft 2021)"),
+                                               tags$h6("Species with congruent geographical distributions, potentially caused by common historical and 
+                                ecological spatial processes, constitute biogeographical units called chorotypes. Nevertheless, the
+                                degree of spatial range congruence characterizing these groups of species is rarely used as an explicit 
+                                parameter. Methods conceived for the identification of patterns of shared ranges often suffer from scale 
+                                bias associated with the use of grids, or the incapacity to describe the full complexity of patterns, 
+                                from core areas of high spatial congruence, to long gradients of range distributions expanding from 
+                                these core areas. Here, we propose a simple analytical method, Spatial Congruence Analysis (SCAN), 
+                                which identifies chorotypes by mapping direct and indirect spatial relationships among species. 
+                                Assessments are made under a referential value of congruence as an explicit numerical parameter. 
+                                A one-layered network connects species (vertices) using pairwise spatial congruence estimates (edges). 
+                                This network is then analyzed for each species, separately, by an algorithm which searches for spatial 
+                                relationships to the reference species. The method was applied to two datasets: a simulated gradient of 
+                                ranges and real distributions of birds. The simulated dataset showed that SCAN can describe gradients 
+                                of distribution with a high level of detail. The bird dataset showed that only a small portion of 
+                                range overlaps is biogeographically meaningful, and that there is a large variation in types of patterns 
+                                that can be found with real distributions. Species analyzed separately may converge on similar or 
+                                identical groups, may be nested in larger chorotypes, or may even generate overlapped patterns with no 
+                                species in common. Chorotypes can vary from simple ones, composed by few highly congruent species, to 
+                                complex, with numerous alternative component species and spatial configurations, which offer insights 
+                                about possible processes driving these patterns in distinct degrees of spatial congruence. Metrics 
+                                such as congruence, depth, richness, and ratio between common and total areas can be used to describe 
+                                chorotypes in detail, allowing comparisons between patterns across regions and taxa."),
+                                           )                    
+                                       )
+                                   )
+                                   
+                           ),
+                           
+                           
                            # maps ----
                            tabItem("maps",
                                    
@@ -471,58 +525,10 @@ shinyUI(
                                        
                                        dataTableOutput("g_sub_table")
                                    )
-                           ),
-                           
-                           # about ----
-                           tabItem("about_SCAN",
-                                   
-                                   fluidPage(
-                                       
-                                       tags$h3("SCAN"),
-                                       
-                                       tags$h4("https://github.com/cassianogatto/SCAN_engine_app"),
-                                       
-                                       fluidRow(
-                                           
-                                           infoBox(width = 12,
-                                                   title = "Chorotypes", 
-                                                   value = " Chorotypes are unique combinations of species with spatial congruences 'Cs' higher between themselves than to any species of other such groups.
-                                In SCAN species groupings are relative to (and determined by) thresholds of congruence Ct.
-                                Each chorotype is a 'community' (in network terminology), as represented in the graph: links are Cs values.
-                                The map depicts the actual spatial distribution of each component species of a chorotype.
-                                Chorotype may 'evolve' as thresholds get lower, grouping more species, until a criterion of spatial overlap is violated.
-                                Some groups exist only at higher Ct; others only at low Ct - it depends on the ecology and history of species and environments.
-                                see Gatto & Cohn-Haft 2021 - PlosOne https://doi.org/10.1371/journal.pone.0245818" ),
-                                           imageOutput("photo1"),
-                                           box(
-                                               tags$h4("Abstract (from Gatto & Cohn-Haft 2021)"),
-                                               tags$h6("Species with congruent geographical distributions, potentially caused by common historical and 
-                                ecological spatial processes, constitute biogeographical units called chorotypes. Nevertheless, the
-                                degree of spatial range congruence characterizing these groups of species is rarely used as an explicit 
-                                parameter. Methods conceived for the identification of patterns of shared ranges often suffer from scale 
-                                bias associated with the use of grids, or the incapacity to describe the full complexity of patterns, 
-                                from core areas of high spatial congruence, to long gradients of range distributions expanding from 
-                                these core areas. Here, we propose a simple analytical method, Spatial Congruence Analysis (SCAN), 
-                                which identifies chorotypes by mapping direct and indirect spatial relationships among species. 
-                                Assessments are made under a referential value of congruence as an explicit numerical parameter. 
-                                A one-layered network connects species (vertices) using pairwise spatial congruence estimates (edges). 
-                                This network is then analyzed for each species, separately, by an algorithm which searches for spatial 
-                                relationships to the reference species. The method was applied to two datasets: a simulated gradient of 
-                                ranges and real distributions of birds. The simulated dataset showed that SCAN can describe gradients 
-                                of distribution with a high level of detail. The bird dataset showed that only a small portion of 
-                                range overlaps is biogeographically meaningful, and that there is a large variation in types of patterns 
-                                that can be found with real distributions. Species analyzed separately may converge on similar or 
-                                identical groups, may be nested in larger chorotypes, or may even generate overlapped patterns with no 
-                                species in common. Chorotypes can vary from simple ones, composed by few highly congruent species, to 
-                                complex, with numerous alternative component species and spatial configurations, which offer insights 
-                                about possible processes driving these patterns in distinct degrees of spatial congruence. Metrics 
-                                such as congruence, depth, richness, and ratio between common and total areas can be used to describe 
-                                chorotypes in detail, allowing comparisons between patterns across regions and taxa."),
-                                           )                    
-                                       )
-                                   )
-                                   
                            )
+                           
+# , 
+# about was here
                            
                        )   
                    )
