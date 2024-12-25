@@ -38,7 +38,8 @@ The **paper** is [here](https://journals.plos.org/plosone/article?id=10.1371/jou
 
 SCAN - *Spatial Congruence Analysis* - is a network analysis bringing an intuitive framework to search for patterns defined by spatially congruent species in biogeography: it allows a deeper understanding of species spatial relationships, and brings pure __spatial congruence__ back as a central, continuous, and explicit parameter in biogeographical analyses.
 
-
+### Example
+The folder <strong>example</strong> brings a small sample of New World Primate distributions to practice and build your first Chorotypes!
 
 ### Perspectives...
 A Shiny app will be soon published (but is already available at https://github.com/cassianogatto/SCAN_engine). Meanwhile we are applying the method to the analysis of endemic patterns of South American Birds and Primates (with collaborators). SCAN is super intuitive, allows the gattering of tons of insights about species distributions, and now is fully converted to a standard network analysis (in R). Many network tools and concepts can now be integrated to biogeographical analysis.
