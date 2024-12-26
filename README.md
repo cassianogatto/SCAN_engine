@@ -29,7 +29,7 @@ The algorithm applies objective criteria regarding the spatial properties of ent
     <br>
   </td>
   <td width = 45% style = "float:right; align:right">
-    <img width = 50%  src = "scan_maps_Icterus_Amazilia.png">
+    <img width = 70%  src = "scan_maps_Icterus_Amazilia.png">
   </td>
  </tr>
  </table>
