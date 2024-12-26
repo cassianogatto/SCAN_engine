@@ -362,7 +362,7 @@ shinyUI(
                                        
                                        fluidRow(
                                            
-                                           tags$h2("Spatial Congruence ANalysis"),
+                                           tags$h2("Spatial Congruence Analysis"),
                                            
                                            box( width = 12,
                                                 
