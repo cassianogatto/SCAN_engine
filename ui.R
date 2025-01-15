@@ -11,7 +11,7 @@
 # show updates and progress of calculations (important)
 
 # not so big
-# Settings page to manage formula, palettes, map & graph preferences, etc... 
+# Separate settings page to manage formula, palettes, map & graph preferences, etc... 
 # filter species by name!
 # ggplot2 map and graph - ok
 # option to split map and graph in new panels
@@ -57,11 +57,11 @@ shinyUI(
     dashboardPage( skin =  'black',# 'red', #'purple', “green”,  “yellow”“blue”,
                    
                    dashboardHeader(title = "SCAN engine V_0.21"),
-                   
+    # menu sidebar ----
                    dashboardSidebar( width = '230px',
                                      
                                      sidebarMenu(
-                                          menuItem("about SCAN", tabName = "about_SCAN"),
+                                         menuItem("about SCAN", tabName = "about_SCAN"),
                                          menuItem("Species Distribution Maps ", tabName = "maps"),
                                          menuItem("Spatial Congruence", tabName = "Cs_tab"),
                                          menuItem("SCAN Analysis", tabName = "scan"),
@@ -71,7 +71,7 @@ shinyUI(
                    ),
                    
                    dashboardBody(
-                       # CSS HTML configs ----
+    # Head CSS HTML configs ----
                        tags$head( 
                            tags$style(
                                HTML( #.shiny-input-container { color: #474747;   }
@@ -93,7 +93,7 @@ shinyUI(
                        
                        tabItems(
                            
-                           # about ----
+    # about SCAN ----
                            tabItem("about_SCAN",
                                    
                                    fluidPage(
@@ -106,13 +106,13 @@ shinyUI(
                                            
                                            infoBox(width = 12,
                                                    title = "Chorotypes", 
-                                                   value = " Chorotypes are unique combinations of species with spatial congruences 'Cs' higher between themselves than to any species of other such groups.
-                                In SCAN species groupings are relative to (and determined by) thresholds of congruence Ct.
-                                Each chorotype is a 'community' (in network terminology), as represented in the graph: links are Cs values.
+                                                   value = " Chorotypes are unique combinations of species with spatial congruences (Cs) higher between themselves than to any species of other such groups.
+                                In SCAN species groupings are relative to (and determined by) thresholds of spatial congruence (Ct).
+                                Each chorotype corresponds to a 'community' in network terminology. In the graph representation, species are vertices (nodes) and links (edges) are Cs values.
                                 The map depicts the actual spatial distribution of each component species of a chorotype.
-                                Chorotype may 'evolve' as thresholds get lower, grouping more species, until a criterion of spatial overlap is violated.
-                                Some groups exist already at high Ct values; others only at low Ct's - it depends on the biogeograpical, ecological and historical attributes of species and environments.
-                                see Gatto & Cohn-Haft 2021 - PlosOne https://doi.org/10.1371/journal.pone.0245818" ),
+                                Chorotypes may 'evolve' grouping more species as thresholds get lower, until any stopping criteria is reached, such as the absence of spatial overlap between all species.
+                                Some chorotypes are ensembled at high Ct values, meaning a very cohesive spatial distribution; others only at low Ct's - it depends on the biogeograpical, ecological and historical attributes of species and environments.
+                                The description, decision, interpretation and discussion about patterns vs. biogeography is the role of the biogeographer. Pls refer to Gatto & Cohn-Haft 2021 to a detailed analysis of these conceptual implications - PlosOne https://doi.org/10.1371/journal.pone.0245818" ),
                                            imageOutput("photo1"),
                                            box(
                                                tags$h4("Abstract (from Gatto & Cohn-Haft 2021)"),
@@ -145,7 +145,7 @@ shinyUI(
                            ),
                            
                            
-                           # maps ----
+       # maps ----
                            tabItem("maps",
                                    
                                    fluidPage(
@@ -197,7 +197,7 @@ shinyUI(
                                            
                                            verbatimTextOutput( "map_upload_names" ),
                                        ),
-                                    # map sample ----
+                         # map sample ----
                                        box( width = 5,
                                             
                                             tags$h3("Map sample"),
@@ -245,7 +245,7 @@ shinyUI(
                                        
                                        tags$h3("How much spatially congruent are two species?"),
                                        
-                                       # Cs  calc ----
+       # Cs calculus ----
                                        box( width = 6,
                                             
                                             tags$h4("The Spatial Congruence Index (aka Hargrove Index - see Gatto & Cohn-Haft 2021) is calculated for each pair of species."),
@@ -270,92 +270,90 @@ shinyUI(
                                             ),
                                        ), 
                                        
-                                       # bufer ----    
-                                       box(width = 6,
-                                           
-                                           
-                                           
-                                           tags$h5("For large datasets, the Cs calculus may take a long time. 
-                                                                        The use of inner buffers in selected area-size-classes (quartiles) may save precious time, 
-                                                                        avoiding marginal spatial overlaps."),
-                                           
-                                           checkboxInput(inputId = "use_buffer_map", label = "Use an internal buffer to avoid marginal overlaps? (metric-based CRS only)", value = FALSE),
-                                           
-                                           conditionalPanel( condition = "input.use_buffer_map == true",
-                                                             
-                                                             fluidRow( column(width = 1, ""),
-                                                                       
-                                                                div(style = "color:red",
-                                                                 
-                                                                 column(width = 2, icon ('skull-crossbones')),   
-                                                                 
-                                                                 column(width = 6, tags$h4("Shrinking Distribution Buffer!")),
-                                                                 
-                                                                 column(width = 2, icon ('skull-crossbones'))) ), # caution message
-                                                             
-                                                             tags$h4("SCAN algorithm uses the original distribution areas (as in the uploaded map) but, depending on the size of the buffer, 
-                                                                some overlaps may be overlooked in the Cs table, which prevents SCAN to recognize any relationship between these species. 
-                                                                        Be careful to not loose information!"),
-                                                             tags$h5("Obs. Buffers are better suited for metric-based CRS projections. The map tab allows crs change (e.g. from WGS84:4326 'degree' unit 
-                                                                        to WGS84:3857 Pseudo-Mercator 'metre'."),
-                                                             
-                                                             numericInput(inputId = "shrink_factor_buff", label = "Choose an internal buffer", value = 0.01),
-                                                             
-                                                             checkboxGroupInput(inputId = "quantiles_to_buffer", label = "Input quartile areas to buffer (smaller to bigger",
-                                                                                
-                                                                                choices = c(1,2,3,4), selected = c(), inline = TRUE),
-                                           ), # use buffer to polygons
-                                           
-                                           conditionalPanel( condition = "input.calculate_Cs > 0",   tags$h6("Do NOT change TAB while running ! This may take a long time depending on the number of species ... ")   ), # calculate Cs        
-                                       ), 
+                         # buffer ----    
+                                   box(width = 6,
                                        
-                                       box( width = 6,
-                                            
-                                            tags$h4("Already have a Cs.csv table with 'sp1', 'sp2' and 'Cs' columns? Check the box and upload."),
-                                            
-                                            checkboxInput("Cs_upload_csv", "Upload a Cs csv file instead"),
-                                            
-                                            conditionalPanel( condition = "input.Cs_upload_csv == true ",
-                                                              
-                                                              fileInput( inputId = "Cs_table", label = "Select a Cs table .csv file", accept = c("text/csv","text/comma-separated-values,text/plain",".csv" ))
-                                            ), 
-                                            
-                                            # tags$h4("Choose a lower limit to spatial congruence Cs ?");# checkboxInput("apply_filter_Cs", "Apply filter to Cs?", value = FALSE),# conditionalPanel( condition = "input.apply_filter_Cs == true", )
-                                       ), # # upload Cs
+                                       tags$h5("For large datasets, the Cs calculus may take a long time. 
+                                                                    The use of inner buffers in selected area-size-classes (quartiles) may save precious time, 
+                                                                    avoiding marginal spatial overlaps."),
                                        
-                                       box(width = 6,
-                                           
-                                           tags$h4("You can store your Cs table downloading it from here."),
-                                           
-                                           downloadButton("download_Cs", "Download Cs.csv"),
-                                           
-                                           tags$h5("Cs table summary and head & tail"),
-                                           
-                                           textOutput("check_Cs_tables"),
-                                           
-                                           fluidRow(
-                                               
-                                               column( width = 6,  box(  tableOutput("Cs_head") ) ),
-                                               
-                                               column( width = 6,  box(  tableOutput("Cs_tail") ) )
-                                           )
-                                       ), # download Cs tables
+                                       checkboxInput(inputId = "use_buffer_map", label = "Use an internal buffer to avoid marginal overlaps? (metric-based CRS only)", value = FALSE),
                                        
-                                       box( width = 6,
+                                       conditionalPanel( condition = "input.use_buffer_map == true",
+                                                         
+                                                         fluidRow( column(width = 1, ""),
+                                                                   
+                                                            div(style = "color:red",
+                                                             
+                                                             column(width = 2, icon ('skull-crossbones')),   
+                                                             
+                                                             column(width = 6, tags$h4("Shrinking Distribution Buffer!")),
+                                                             
+                                                             column(width = 2, icon ('skull-crossbones'))) ), # caution message
+                                                         
+                                                         tags$h4("SCAN algorithm uses the original distribution areas (as in the uploaded map) but, depending on the size of the buffer, 
+                                                            some overlaps may be overlooked in the Cs table, which prevents SCAN to recognize any relationship between these species. 
+                                                                    Be careful to not loose information!"),
+                                                         tags$h5("Obs. Buffers are better suited for metric-based CRS projections. The map tab allows crs change (e.g. from WGS84:4326 'degree' unit 
+                                                                    to WGS84:3857 Pseudo-Mercator 'metre'."),
+                                                         
+                                                         numericInput(inputId = "shrink_factor_buff", label = "Choose an internal buffer", value = 0.01),
+                                                         
+                                                         checkboxGroupInput(inputId = "quantiles_to_buffer", label = "Input quartile areas to buffer (smaller to bigger",
+                                                                            
+                                                                            choices = c(1,2,3,4), selected = c(), inline = TRUE),
+                                       ), # use buffer to polygons
+                                       
+                                       conditionalPanel( condition = "input.calculate_Cs > 0",   tags$h6("Do NOT change TAB while running ! This may take a long time depending on the number of species ... ")   ), # calculate Cs        
+                                   ), 
+                                       
+                                   box( width = 6,
+                                        
+                                        tags$h4("Already have a Cs.csv table with 'sp1', 'sp2' and 'Cs' columns? Check the box and upload."),
+                                        
+                                        checkboxInput("Cs_upload_csv", "Upload a Cs csv file instead"),
+                                        
+                                        conditionalPanel( condition = "input.Cs_upload_csv == true ",
+                                                          
+                                                          fileInput( inputId = "Cs_table", label = "Select a Cs table .csv file", accept = c("text/csv","text/comma-separated-values,text/plain",".csv" ))
+                                        ), 
+                                        
+                                        # tags$h4("Choose a lower limit to spatial congruence Cs ?");# checkboxInput("apply_filter_Cs", "Apply filter to Cs?", value = FALSE),# conditionalPanel( condition = "input.apply_filter_Cs == true", )
+                                   ), # # upload Cs
+                                       
+                                   box(width = 6,
+                                       
+                                       tags$h4("You can store your Cs table downloading it from here."),
+                                       
+                                       downloadButton("download_Cs", "Download Cs.csv"),
+                                       
+                                       tags$h5("Cs table summary and head & tail"),
+                                       
+                                       textOutput("check_Cs_tables"),
+                                       
+                                       fluidRow(
+                                           
+                                           column( width = 6,  box(  tableOutput("Cs_head") ) ),
+                                           
+                                           column( width = 6,  box(  tableOutput("Cs_tail") ) )
+                                       )
+                                   ), # download Cs tables
+                                       
+                                   box( width = 6,
+                                        
+                                        tags$h5("<code> Check graph's nodes and edges here!</code>"),    
+                                        
+                                        fluidRow(    
                                             
-                                            tags$h5("<code> Check graph's nodes and edges here!</code>"),    
+                                            column( width = 6, tableOutput("graph_nodes") ),
                                             
-                                            fluidRow(    
-                                                
-                                                column( width = 6, tableOutput("graph_nodes") ),
-                                                
-                                                column( width = 6, tableOutput("graph_edges") )
-                                            )
-                                       ) # check Cs
+                                            column( width = 6, tableOutput("graph_edges") )
+                                        )
+                                   ) # check Cs
                                    )
                            ),
                            
-                           # scan ----
+       # SCAN ----
                            tabItem("scan",
                                    
                                    fluidPage(
