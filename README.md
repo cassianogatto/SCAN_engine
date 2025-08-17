@@ -11,7 +11,7 @@ SCAN explores species-to-species spatial relationships in an enviroment of a sin
 
 ### Why is it important?
 
-The algorithm applies objective criteria regarding the spatial properties of entities, such as raw species' distributions, but can also be extrapolated to the analysis of environments and geographic regions. Recognized patterns may vary from highly congruent, when species have very similar distributions, to loose ones, when continuous gradients combine species overlapping or replacing each other along a transitional zone. This flexibility allows the recognition of dynamics and evolution in spatial patterns, and also allows the comparison between species and regions based on natural criteria.
+The algorithm applies objective criteria regarding the spatial properties of entities, such as raw species' distributions, but can also be extrapolated to the analysis of environments and geographic regions. Recognized patterns may vary from highly congruent, when species have very similar distributions, to patterns where congruent requirement settings are relaxed and more species included. In the later case, continuous gradients can be highlighted by species overlapping or replacing each other along a transitional zone. This flexibility allows the recognition of dynamics and, perhaps, evolution in spatial patterns. More important, it allows the comparison between species and regions based on natural and objective criteria, such as number of congruent species, their level of congruence, the ratio between the shared and total areas of distribution, and many more derived from network analytics.
 
  <table style = "border: 0px">
   <tr  style = "display: flex">
